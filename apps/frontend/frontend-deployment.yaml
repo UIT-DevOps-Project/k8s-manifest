@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: devops-app
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,8 +18,12 @@ spec:
       labels:
         app: frontend
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+
       nodeSelector:
         node-group: app-nodes
+
       containers:
       - name: frontend-app
         image: ghcr.io/uit-devops-project/frontend-app:latest

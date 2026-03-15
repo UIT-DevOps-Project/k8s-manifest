@@ -2,9 +2,11 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  namespace: devops-app
 spec:
   serviceName: postgres
   replicas: 1
+
   selector:
     matchLabels:
       app: postgres
@@ -13,42 +15,47 @@ spec:
     metadata:
       labels:
         app: postgres
-      spec:
-       nodeSelector:
-          node-group: app-nodes
-          
-       containers:
-       - name: postgres
-         image: postgres:15-alpine
-         ports:
-         - containerPort: 5432
 
-         env:
-         - name: POSTGRES_DB
-           valueFrom:
-             secretKeyRef:
-               name: postgres-secret
-               key: POSTGRES_DB
+    spec:
+      nodeSelector:
+        node-group: app-nodes
 
-         - name: POSTGRES_USER
-           valueFrom:
-              secretKeyRef:
-                name: postgres-secret
-                key: POSTGRES_USER
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
 
-         - name: POSTGRES_PASSWORD
-           valueFrom:
-              secretKeyRef:
-                name: postgres-secret
-                key: POSTGRES_PASSWORD
-         volumeMounts:
-         - name: postgres-storage
-           mountPath: /var/lib/postgresql/data
+        ports:
+        - containerPort: 5432
+
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+
   volumeClaimTemplates:
   - metadata:
       name: postgres-storage
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes:
+        - ReadWriteOnce
       resources:
         requests:
           storage: 1Gi
