@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchlabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        node-group: app-nodes
+
+      containers:
+      - name: backend-app
+        image: ghcr.io/uit-devops-project/backend-app:latest
+        command: 
+        - sh
+        - c
+        - npx prisma migrate deploy && npm start
+
+        ports:
+        - containerPort: 3000
+
+        env:
+        - name: POSTGRES_URL
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_URL
+    
