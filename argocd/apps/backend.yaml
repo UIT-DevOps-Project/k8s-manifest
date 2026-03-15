@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: feat/argocd-setup
-    path: argocd/apps/backend
+    path: apps/backend
   destination:
     server: https://kubernetes.default.svc
     namespace: staging
