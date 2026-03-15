@@ -7,10 +7,12 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: main
+    targetRevision: feat/argocd-setup
     path: argocd/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
