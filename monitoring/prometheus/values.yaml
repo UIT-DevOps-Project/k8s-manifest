@@ -1,0 +1,19 @@
+kube-prometheus-stack:
+  prometheus:
+    prometheusSpec:
+      nodeSelector:
+        node-group: monitor-node
+      
+  grafana:
+    adminPassword: "admin"
+    nodeSelector:
+      node-group: monitor-node
+      
+  alertmanager:
+    alertmanagerSpec:
+      nodeSelector:
+        node-group: monitor-node
+        
+  prometheusOperator:
+    nodeSelector:
+      node-group: monitor-node
