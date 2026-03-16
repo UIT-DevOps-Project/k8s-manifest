@@ -1,9 +1,17 @@
 kube-prometheus-stack:
+  prometheusOperator:
+    admissionWebhooks:
+      enabled: false
+    tls:
+      enabled: false
+    nodeSelector:
+      node-group: monitor-node
+
   prometheus:
     prometheusSpec:
       nodeSelector:
         node-group: monitor-node
-      
+    
   grafana:
     adminPassword: "admin"
     nodeSelector:
@@ -13,7 +21,3 @@ kube-prometheus-stack:
     alertmanagerSpec:
       nodeSelector:
         node-group: monitor-node
-        
-  prometheusOperator:
-    nodeSelector:
-      node-group: monitor-node
