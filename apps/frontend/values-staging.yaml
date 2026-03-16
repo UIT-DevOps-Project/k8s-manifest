@@ -1,0 +1,14 @@
+namespace: devops-app
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/uit-devops-project/frontend-app
+  tag: latest
+
+imagePullSecret: ghcr-secret
+
+nodeSelector: app-nodes
+
+service:
+  port: 80
