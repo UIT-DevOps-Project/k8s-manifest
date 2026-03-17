@@ -1,4 +1,4 @@
-namespace: app-staging
+namespace: staging
 
 replicaCount: 1
 

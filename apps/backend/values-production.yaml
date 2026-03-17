@@ -1,4 +1,4 @@
-namespace: app-production
+namespace: production
 
 replicaCount: 3
 
