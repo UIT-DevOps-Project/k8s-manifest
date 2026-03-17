@@ -1,9 +1,9 @@
 kube-prometheus-stack:
   prometheusOperator:
     admissionWebhooks:
-      enabled: false
+      enabled: false # Disable admission webhooks to avoid TLS issues in local environments 
     tls:
-      enabled: false
+      enabled: false # Disable TLS for Prometheus Operator to avoid certificate issues in local environments
     nodeSelector:
       node-group: monitor-node
 
