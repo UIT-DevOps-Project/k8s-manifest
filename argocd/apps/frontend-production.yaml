@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: backend
+  name: frontend
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: feat/monitoring-stack
-    path: apps/backend
+    targetRevision: main
+    path: apps/frontend
   destination:
     server: https://kubernetes.default.svc
-    namespace: staging
+    namespace: production
   syncPolicy:
     automated:
       prune: true
