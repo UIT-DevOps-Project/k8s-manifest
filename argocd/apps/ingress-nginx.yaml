@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: feat/argocd-ingress-nginx
-    path: kind
+    path: ingress
 
   destination:
     server: https://kubernetes.default.svc
