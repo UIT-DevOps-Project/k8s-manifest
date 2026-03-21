@@ -562,6 +562,8 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/version: 1.15.0
   name: ingress-nginx-admission-create
+  annotations:
+    argocd.argoproj.io/sync-options: Ignore
   namespace: ingress-nginx
 
 spec:
