@@ -533,6 +533,8 @@ metadata:
     app.kubernetes.io/version: 1.15.0
   name: ingress-nginx-admission-create
   namespace: ingress-nginx
+annotations:
+    argocd.argoproj.io/sync-options: Ignore
 spec:
   template:
     metadata:
@@ -587,6 +589,8 @@ metadata:
     app.kubernetes.io/version: 1.15.0
   name: ingress-nginx-admission-patch
   namespace: ingress-nginx
+annotations:
+  argocd.argoproj.io/sync-options: Ignore
 spec:
   template:
     metadata:
