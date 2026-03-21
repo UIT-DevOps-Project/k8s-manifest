@@ -9,8 +9,8 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<your-repo>/k8s-manifest
-    targetRevision: main
+    repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
+    targetRevision: feat/argocd-ingress-nginx
     path: kind
 
   destination:
