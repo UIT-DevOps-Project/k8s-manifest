@@ -1,0 +1,23 @@
+kube-prometheus-stack:
+  prometheusOperator:
+    admissionWebhooks:
+      enabled: false # Disable admission webhooks to avoid TLS issues in local environments 
+    tls:
+      enabled: false # Disable TLS for Prometheus Operator to avoid certificate issues in local environments
+    nodeSelector:
+      node-group: monitor-node
+
+  prometheus:
+    prometheusSpec:
+      nodeSelector:
+        node-group: monitor-node
+    
+  grafana:
+    adminPassword: "admin"
+    nodeSelector:
+      node-group: monitor-node
+      
+  alertmanager:
+    alertmanagerSpec:
+      nodeSelector:
+        node-group: monitor-node
