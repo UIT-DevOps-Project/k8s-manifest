@@ -10,7 +10,7 @@ spec:
 
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: feat/argocd-ingress-nginx
+    targetRevision: main
     path: ingress/controller
 
   destination:
