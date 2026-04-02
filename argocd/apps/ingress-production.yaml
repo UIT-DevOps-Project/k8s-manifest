@@ -1,23 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-
 metadata:
-  name: ingress-nginx
+  name: ingress-production
   namespace: argocd
-
 spec:
   project: default
-
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: feat/argocd-ingress-nginx
-    path: ingress/controller
-
+    path: ingress/resources/production
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: ingress-nginx
-
+    namespace: production
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - CreateNamespace=true
