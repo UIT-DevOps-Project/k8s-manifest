@@ -1,0 +1,18 @@
+namespace: production
+
+replicaCount: 3
+
+image:
+  repository: postgres
+  tag: 15-alpine
+
+nodeSelector: app-nodes
+
+service:
+  port: 5432
+
+storage:
+  size: 5Gi
+
+database:
+  secretName: postgres-secret

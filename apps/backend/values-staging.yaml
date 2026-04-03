@@ -1,0 +1,19 @@
+namespace: staging
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/uit-devops-project/backend-app
+  tag: latest
+
+imagePullSecret: ghcr-secret
+
+nodeSelector: app-nodes
+
+command: "npx prisma migrate deploy && npm start"
+
+service:
+  port: 3000
+
+database:
+  secretName: postgres-secret

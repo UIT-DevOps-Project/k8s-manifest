@@ -1,0 +1,18 @@
+namespace: staging
+
+replicaCount: 1
+
+image:
+  repository: postgres
+  tag: 15-alpine
+
+nodeSelector: app-nodes
+
+service:
+  port: 5432
+
+storage:
+  size: 1Gi
+
+database:
+  secretName: postgres-secret
