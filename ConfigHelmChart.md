@@ -19,13 +19,22 @@
 ## Sử dụng kubeseal để mã hóa secret và apply sealed-Secret-Controller vào cluster để dùng
 - Cách hoạt động tạo secret bằng kubectl. Sau khi tạo secret dùng lệnh kubeseal để mã hóa secret và lưu vào file *-sealedsecret chuyển tiếp vào folder base/ .Khi cluster online thì sẽ gửi request tới sealed-secret-controller mã hóa file *-sealedsecret thành *-secret và sử dụng nó. 
 => Nhưng nếu cluster không online thì sẽ không thể mã hóa được file secret. Vì vậy có tích hợp cert/pub-cert.pem đây là public key lấy từ controller hỗ trợ mã hóa không cần gọi tới cluster thuận lợi cho CI/CD.
+### workflow triển khai
+- ``` kind-config-> nginx-controller-> base-> apps ```
+## Cài đặt Kubeseal Controller để mã hóa kubesealsecret
+``` kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml ```
+- Sau đó apply privatekey.pem để giải mã sealedsecret
+- ``` kubectl apply -f privatekey.pem ```\
+- Sau đó apply base trước
+- ``` kubectl apply -R -f base/ ``` 
+- để tạo các tài nguyên như namespace và apply secret
 ## Sử dụng helm chart để apply backend, frontend, database
 - Apply môi trường staging test thử:
-- ```helm install backend apps/backend -n devops-app -f apps/backend/values-staging.yaml ```
+- ```helm install backend apps/backend -n staging -f apps/backend/values-staging.yaml ```
 - Apply môi trường production test thử:
-- ```helm install backend apps/backend -n devops-app -f apps/backend/values-production.yaml```
+- ```helm install backend apps/backend -n production -f apps/backend/values-production.yaml```
 - Nếu thay đổi thì có thể dùng lệnh này để upgrade
-- ``` helm upgrade backend apps/backend -n devops-app -f apps/backend/values-production.yaml```
+- ``` helm upgrade backend apps/backend -n staging -f apps/backend/values-production.yaml```
 - Check version helm chart:
 - ``` helm list -A ```
 - Check pods:
@@ -38,5 +47,5 @@
 - apps: dùng để deploy gồm backend, frontend, database
 - cert: lưu pub-cert mã hóa secret để sử dụng thuận lợi cho CI/CD không cần connect tới cluster
 
-- ``` kind-> nginx-controller-> base-> apps ```
+
 

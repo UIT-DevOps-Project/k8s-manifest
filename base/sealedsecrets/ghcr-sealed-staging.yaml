@@ -1,0 +1,20 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "ghcr-secret",
+    "namespace": "staging"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "ghcr-secret",
+        "namespace": "staging"
+      },
+      "type": "kubernetes.io/dockerconfigjson"
+    },
+    "encryptedData": {
+      ".dockerconfigjson": "AgAGlS0hdMlZfoLIhLCuc9B8oiujGDfhqgvtuhasF9SFpUT1h8YEzepkOZJ59ljcJCQa4SMIM/sCn59oD5c0hi3or6QsG/POTvflx+8XM8bQIlTGByCb9SnvXwM4nUFAR9RZz4K8CduAlrqSLxh5yQCZLCEXNFucwKfEr+yQyz25A7sBh0XXvV6JD9H7NPEsnsxvB/ToZrQRK8OSbebD5gZ/I5jcuJ1gZjQSSHJOreNKgOchO1DfinJrNgvkG+8YlGyFpfh6x6V0wquA1kheiAXplF5svRduRv+DGSr7hHRE7iKHoKhdSHRIdIni1Qwa5q9L/rVd8yFAH7hRhSQNHydbHliADe2xtW7df9JJIytQ6a6wlkgnk9ZRUTHqBB5WZpoveLflepIJuY9hu39jx3XnlkWELkgpBoevJUDhP3l3CYnX0e74eGLhyeGRTYvTrHvE4Fpopn9MijykLKMunD8L+UtM5Nb13IvbUOPPJ7a4VFWYfG/o6+2ZHDnKJrPPqKe51ErRpUtwdG6Om/5ELZERV7G614U9QYu4Z+hEvBrnXpe00VndALxcBq4vHZZFG+3bZldUee+ddCBQeZlmZeYw9Nwngzg2MwUkg9UBv5lKVpdROH4QRTCzF2Cgi3JTvtjEwx0Sg6cb8MtrYpilnJWzE0krjNSjYEXpOd5LIukG6ZofEIhnsmxFu5JwNW0fZEsiHw5bbbDM9Tegsp5dBrGr6X6AjswJNAUU2KHyKOig514B2IRGx/O3GK2vHsyXICOF8zivY+W/0hhghELjM2EwgZOmSf10ViPGEOSU/Mg2qAma+Mw58lUt4R3s4x7aesHLG9hMW/uJhwOORQqC9UTlNKoxYMZUp0LMd/7zcxgqwx7iqiiXJGu5ToGNERDzlcLI7G8D9bk4jp/9gzCBdy5GKKeWmLIUl4gtbZxmmgpNn5ARzsop4f0nWJczHmU/83I="
+    }
+  }
+}

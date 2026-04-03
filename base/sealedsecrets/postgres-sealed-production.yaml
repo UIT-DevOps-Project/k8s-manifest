@@ -1,0 +1,23 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "postgres-secret",
+    "namespace": "production"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "postgres-secret",
+        "namespace": "production"
+      },
+      "type": "Opaque"
+    },
+    "encryptedData": {
+      "DATABASE_URL": "AgAD5Y8hedDVwePzElBmHpEK+qxJMMvjmP+x+ZYG4jkl8QOgGAa4TxTZFeacn5NTPz6GwJWNRCruqWV61FKeEevzryhKoe26bgV7tZcjh+Y8ilFGWYTOsZ6sqd2llhfV+PGP9H35zueh57XUDID/ydjt1eArwxjDO/2OMLY4NdkmMERm8mKWDAthGYuf1+ZZ4DFRN6NtWaAKcorHkkKBUcRz1jBrfq8FW4npcpTeDCQ3W/LqRiiMEezstnl9/I+ciJ9EHh/exAvObazjMiySgt0WGdMoutVDzJbCaTkKlZpRjw1U0DGSV73zi604Vh4uRXpc4tuNniVZvbQu7a2Ycl+3BqTq4ksoIr+MaC5nG0OtqMk1toujInC22cZhwk9LdZ5Od8/MMgTiZ2+YBgis+/n0apG/DZCEwg7wCAb6MD6yT0A04NHPgrXgcZY1vRCXnDODj4sLTkenVZSZjEwPztmazq4tOnszuJ4GwLsHxwsiulag2DTCaz722oo1TfwLhs2r1PtZE/F+MBa9RUPVDPDG5oifh9I7w/2Sz1u500/uYKu36B9yte+IotQo4nxYGjOJgExn5OcON3gO3pelEK7djHjRuqJyXo64V3TU8SWv1hKsuwjLXtQGgNwHMzMSDsBcLkeZFQbBCnDmjFUVoo9Y3kEpn3Q9Qu7steOiUG9TewBvw0b8oimso5hPCjtYuo43N2KIr8o07ZYLjPmoAkCi0I0tdQidUxdXcB9x1XwkDnjFKbL4OB3/Il8zHmxPIGMEpDwo/jkHdp0bzw==",
+      "POSTGRES_DB": "AgCvQRJoswG9V+a8dl4wwqRw95wRaQdnyRZKEzVH6roNx9ubZeLTAiOsbEhTZ4IrLv7qswzDHeylSN0sKdO9kEj+HAc9pR+kAjMGOZHyUq9LOddd0QyH1qAqS1bGeqZf24ZneNiZ5nV4diJtiDxSc/R+jKWw8ACrS4us4CYhbSHy86B0ja0EvGKgYWqklUPmHcS/L8PAusNhtzvp4qVy4+FkkPvhldZq/KcW59myDMWUZYwSkvUm2s2RhU6oxvjgKR5Z2mH4eCH+SX9whUeOsWdqUxvpAuEbVZ1eSVZwjj9mtuH/gHd1JGDc1ppPYwxgsdYniIDZGaT8jxwbe+ikSUHtmPcTiWU7jOEoVkaMIr/JbfLbMYLWDj5kVZtPSvqOysgv84tES8mWfw2x8SgvSjcXPNqfXaNFTvWXg5R+XjSmGw6CRF8elRZALkmYLZyqawTPgui1wwX7cRaBiqiQnZZctPNiV8TvGBAsggLv3UvHpZNck/V+GY5ou4WcnN+l62bRlSu0VPE2Xh1fMQOSxxKdQ9iqE+4BFfwz79tGk+zTY4bOo1RpIXa0J1qyA8MSwBmCgstD1gDPCgPO3OLOfJ609iq4FiGuDXf9nCF7a2AUT9TeTJDYXi77DWylK4Y3unjfvn/6GXtq3Sq80fsdKFDyJN/ZhiUwjB4k87fyo649SS12I4APIFdzcRX/J/sCXOhraU/G4q8yH5vISg==",
+      "POSTGRES_PASSWORD": "AgCJjzNFFRTKzryjNLtoHeA6Og6vC4jGrqAQYYaqUHtKWhSn0vqHgI6mbDUNcjdk8YXTV6H3P/RcozSw6cdf3RSNT0d9JPMGyjMST56z2GsLJFYwSy1HtvcqBS0+yRRmv5uYagbb0DsW0GLqRKk0NE6s6965N+eFa2uPzbSU+JcqaXPD+Ff+SSJP4IUV8eQRM7u5KC8Ojz0wlmipT/W0Jkx3jEt1q0OS1oH4uF7Oa9tgvwuq+cAo/hCOa6dVPvcmkSSZ/Ru1W4aVou4tIG7rozla6blEKmffAZdkwu3ptzQrVG5uUh0+LVqU8F7d631TpaAYcUlPNpTjFZom12SrjQmilxCiejQZNP2N/DgkM4MSGqkTH/PGFmZnAL+GxcwhXIfm0D/L0e9v5wIxI0dQtDhS21rQu3CS+oipuQY84MrKrWOpBVRfu8WlKbsCZX+w5SrX1HqrIuQCzqO6lwOkxzsQDVgLnS32jRdR35cZZMRoFmJJl6iVjQOj+MUsYXW471OKmcCpNtExyMO7jif+ZKwOC2jcuQlGal4nZj3oBqYVhwvld/OIEJnO12AV/nqBZTGuCWWH/lc+AliNFgrvcgQ4SiXX1X0h00UBeQv+ljPs/S+oP3Gc4z+vMe8jZXBpMifxU4SNDPkNCYDMzB7UivTAQsR7km3sHSVCULEdrt30F0t3GEX+l9M0fZcjXzqymeNuOGiz/THCM46RpA==",
+      "POSTGRES_USER": "AgBPDU3HL1n79DGH21L6hU1q61hDNtCbyJjepmyPUedyDK4T+z948hs48zMWq6VjLv+PYd3a87wdN6C7zP2REF2clL6BLKSXm+QozPoIfAAsMsgSpvVza4Q3UsbyN6LyKLyLohkrFqOHbbQOURaqnAFwVZLdpVqsChrOSQao0Dv4S6uOPjILnKfWXyA69lGtlT7dhQkcpDC5cCWV50raxvWANNJ5Gpmkcj/rYJwkY6Bl8tA24UMi3MJF/aY3ejdvUupw/gp16MqLWv5rUvBRuj+kS4Hx81FT8/Fnt9+vJcn0K+vD9gS4/RMeUnW5PV/OI+pt9WZNkiL6UTHJJvfJVqIor/Zma/OyhVqCprad30HpoHuVq+FIwYYnBiil/XCftMGqtSrSEThu39y8OvHQj1XhHxeIN9o59UgYmbnFYidyLGb1lJW4N+GbO+NPBamVKGaoHcnhhOtrKy1AUexesoTeELXLeMf2wdgJkmEDhFgQ9dkNN6+Obi4SsNTLYpiIWwBeKz0w/LO13n7MX5avPyc1GKxxc+ONHRiNb0wY/HsadOQnH1ZxsaZpUM4lJt5nLOlQ/y44NFY/O84XrPbuitSw2IL8Ui12e6voKdSdSven38wRGz3eW8S8mRbGlZMrOlAIckOZ04XwJbLVOCFe6pV/5zg+cAxNd+OuIeJ8p9TG6JAilzbkJd6itDS4ZAMPtyhUP1CcZNDQ6w=="
+    }
+  }
+}
