@@ -22,7 +22,7 @@ kubectl get nodes
 ## Bước 2: Apply Ingress Nginx
 
 ```bash
-kubectl apply -f kind/ingress-nginx-kind.yaml
+kubectl apply -f ingress/controller/ingress-nginx-kind.yaml
 ```
 
 Kiểm tra Ingress Nginx đã chạy:
@@ -56,7 +56,7 @@ kubectl logs -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx
 Xóa Ingress Nginx:
 
 ```bash
-kubectl delete -f kind/ingress-nginx-kind.yaml
+kubectl delete -f ingress/controller/ingress-nginx-kind.yaml
 ```
 
 Xóa KinD cluster:
