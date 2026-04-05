@@ -1,9 +1,6 @@
-# Ingress resources managed by Argo CD
+# Ingress resources note
 
-- Put staging ingress manifests in `ingress/resources/staging`.
-- Put production ingress manifests in `ingress/resources/production`.
-- Argo CD apps `ingress-staging` and `ingress-production` auto-sync these paths.
-
-Example staging ingress file path:
-
-`ingress/resources/staging/my-service-ingress.yaml`
+- Argo CD manages only the ingress controller app: ingress-nginx.
+- Application ingress objects are expected to be managed by Helm charts per environment.
+- Keep this folder only for optional manual ingress manifests when needed.
+- If you add manual ingress manifests here, place files directly under ingress/resources.
