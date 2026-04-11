@@ -10,7 +10,7 @@ spec:
 
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: main
+    targetRevision: feat/user-flow-complete
     path: ingress/controller
 
   destination:
