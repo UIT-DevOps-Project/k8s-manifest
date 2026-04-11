@@ -10,7 +10,7 @@ imagePullSecret: ghcr-secret
 
 nodeSelector: app-nodes
 
-command: "npx prisma migrate deploy && npm start"
+command: ""
 
 service:
   port: 3000

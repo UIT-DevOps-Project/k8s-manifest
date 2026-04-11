@@ -1,3 +1,5 @@
+{{- $command := default "" .Values.command -}}
+
 apiVersion: apps/v1
 kind: Deployment
 
@@ -36,10 +38,12 @@ spec:
 
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 
+          {{- if $command }}
           command:
             - sh
             - -c
-            - {{ .Values.command }}
+            - {{ $command | quote }}
+          {{- end }}
 
           ports:
             - containerPort: {{ .Values.service.port }}
