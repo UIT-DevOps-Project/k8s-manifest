@@ -4,7 +4,7 @@
 - All application routing ingress objects are centralized here.
 - Application Helm charts no longer include ingress templates.
 - Current routing split:
-	- `app.local`: production frontend (`/`) and production backend (`/api`)
-	- `staging.app.local`: staging frontend (`/`) and staging backend (`/api`)
+	- `fe.app.local`: production frontend (`/`) and production backend (`/api`)
+	- `staging.fe.app.local`: staging frontend (`/`) and staging backend (`/api`)
 
 
