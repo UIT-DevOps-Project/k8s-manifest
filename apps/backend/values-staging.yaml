@@ -12,7 +12,7 @@ imagePullSecret: ghcr-secret
 nodeSelector:
   node-group: app-nodes
 
-command: "npx prisma migrate deploy && npm start"
+command: "node src/server.js"
 
 service:
   type: ClusterIP
