@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: feat/user-flow-complete
     path: apps/frontend
+    helm:
+      valueFiles:
+        - values-production.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: production
