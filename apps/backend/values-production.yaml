@@ -5,15 +5,54 @@ replicaCount: 3
 image:
   repository: ghcr.io/uit-devops-project/backend-app
   tag: latest
+  pullPolicy: Always
 
 imagePullSecret: ghcr-secret
 
-nodeSelector: app-nodes
+nodeSelector:
+  node-group: app-nodes
 
-command: ""
+command: "node src/server.js"
 
 service:
+  type: ClusterIP
   port: 3000
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: nginx
+  host: app.local
+  path: /api
+  pathType: Prefix
+  annotations: {}
+  tls: []
 
 database:
   secretName: postgres-secret
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 192Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+readinessProbe:
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 2
+  failureThreshold: 3
+
+livenessProbe:
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 2
+  failureThreshold: 3
+
+extraEnv: []

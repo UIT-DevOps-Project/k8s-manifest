@@ -1,56 +1,80 @@
-{{- $command := default "" .Values.command -}}
-
+{{- $command := .Values.command -}}
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: {{ .Chart.Name }}
-  namespace: {{ .Values.namespace }}
-
+  namespace: {{ .Values.namespace | default .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
-
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
-
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
-
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: {{ .Chart.Name }}
-
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-
+      {{- with .Values.imagePullSecret }}
       imagePullSecrets:
-        - name: {{ .Values.imagePullSecret }}
-
+        - name: {{ . }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-        node-group: {{ .Values.nodeSelector }}
-
+{{ toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: backend-app
-
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           {{- if $command }}
+          {{- if kindIs "string" $command }}
           command:
             - sh
             - -c
             - {{ $command | quote }}
+          {{- else }}
+          command:
+{{ toYaml $command | nindent 12 }}
           {{- end }}
-
+          {{- end }}
+          {{- with .Values.args }}
+          args:
+{{ toYaml . | nindent 12 }}
+          {{- end }}
           ports:
-            - containerPort: {{ .Values.service.port }}
-
+            - name: http
+              containerPort: {{ .Values.service.targetPort | default .Values.service.port }}
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.database.secretName }}
                   key: DATABASE_URL
+          {{- with .Values.extraEnv }}
+{{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+{{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+{{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+{{ toYaml . | nindent 12 }}
+          {{- end }}
