@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: main
     path: apps/frontend
+    helm:
+      valueFiles:
+        - values-staging.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: staging
