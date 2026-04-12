@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: staging.app.local
+    - host: staging.be.app.local
       http:
         paths:
           - path: /api
