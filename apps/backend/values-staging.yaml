@@ -5,48 +5,18 @@ replicaCount: 1
 image:
   repository: ghcr.io/uit-devops-project/backend-app
   tag: latest
-  pullPolicy: Always
 
 imagePullSecret: ghcr-secret
 
-nodeSelector:
-  node-group: app-nodes
+nodeSelector: app-nodes
 
 command: "/app/node_modules/.bin/prisma migrate deploy && node src/server.js"
 
 service:
-  type: ClusterIP
   port: 3000
-  targetPort: 3000
 
 ingress:
   host: staging.fe.app.local
 
 database:
   secretName: postgres-secret
-
-resources:
-  requests:
-    cpu: 100m
-    memory: 128Mi
-  limits:
-    cpu: 300m
-    memory: 384Mi
-
-readinessProbe:
-  tcpSocket:
-    port: http
-  initialDelaySeconds: 5
-  periodSeconds: 10
-  timeoutSeconds: 2
-  failureThreshold: 3
-
-livenessProbe:
-  tcpSocket:
-    port: http
-  initialDelaySeconds: 20
-  periodSeconds: 10
-  timeoutSeconds: 2
-  failureThreshold: 3
-
-extraEnv: []
