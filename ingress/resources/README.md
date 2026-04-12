@@ -1,6 +1,10 @@
-# Ingress resources note
+# Ingress resources
 
-- Argo CD manages only the ingress controller app: ingress-nginx.
-- Application ingress objects are expected to be managed by Helm charts per environment.
-- Keep this folder only for optional manual ingress manifests when needed.
-- If you add manual ingress manifests here, place files directly under ingress/resources.
+- This folder is managed by Argo CD application `ingress-resources`.
+- All application routing ingress objects are centralized here.
+- Application Helm charts no longer include ingress templates.
+- Current routing split:
+	- `app.local`: production frontend (`/`) and production backend (`/api`)
+	- `staging.app.local`: staging frontend (`/`) and staging backend (`/api`)
+
+
