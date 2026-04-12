@@ -19,6 +19,9 @@ service:
   port: 3000
   targetPort: 3000
 
+ingress:
+  host: fe.app.local
+
 database:
   secretName: postgres-secret
 
