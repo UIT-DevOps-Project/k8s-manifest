@@ -10,10 +10,13 @@ imagePullSecret: ghcr-secret
 
 nodeSelector: app-nodes
 
-command: "npx prisma migrate deploy && npm start"
+command: "/app/node_modules/.bin/prisma migrate deploy && node src/server.js"
 
 service:
   port: 3000
+
+ingress:
+  host: staging.fe.app.local
 
 database:
   secretName: postgres-secret

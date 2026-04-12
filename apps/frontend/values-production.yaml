@@ -12,6 +12,9 @@ nodeSelector: app-nodes
 
 service:
   port: 80
+
+ingress:
+  host: fe.app.local
   
 env:
   API_BASE_URL: /api

@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: frontend-staging
+  name: postgres-production
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
     targetRevision: main
-    path: apps/frontend
+    path: apps/postgres
     helm:
       valueFiles:
-        - values-staging.yaml
+        - values-production.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: staging
+    namespace: production
   syncPolicy:
     automated:
       prune: true
