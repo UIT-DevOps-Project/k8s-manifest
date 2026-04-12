@@ -2,14 +2,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend
-  namespace: staging
-  labels:
-    app.kubernetes.io/name: frontend
-    app.kubernetes.io/part-of: ingress-resources
+  namespace: {{ .Values.namespace }}
 spec:
   ingressClassName: nginx
   rules:
-    - host: staging.fe.app.local
+    - host: app.local
       http:
         paths:
           - path: /
@@ -18,4 +15,4 @@ spec:
               service:
                 name: frontend
                 port:
-                  number: 80
+                  number: {{ .Values.service.port }}
