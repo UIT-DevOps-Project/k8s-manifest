@@ -1,4 +1,4 @@
 .env
 postgres-secret.yaml
 ghcr-secret.yaml
-key.yaml
+private-key.yaml
