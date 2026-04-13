@@ -1,0 +1,10 @@
+apiVersion: v2
+name: fluentbit
+description: A Helm chart for Fluent Bit as DaemonSet
+type: application
+version: 0.1.0
+appVersion: "3.2.3"
+dependencies:
+  - name: fluent-bit
+    version: 0.48.5
+    repository: https://fluent.github.io/helm-charts
