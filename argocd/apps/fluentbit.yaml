@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring-fluentbit
+  name: fluentbit
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: fluentbit
+    targetRevision: main
     path: monitoring/fluentbit
   destination:
     server: https://kubernetes.default.svc
@@ -18,5 +18,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
