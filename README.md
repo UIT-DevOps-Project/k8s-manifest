@@ -8,7 +8,9 @@ k8s-manifest/
 │       ├── backend-production.yaml    
 │       ├── frontend-staging.yaml      
 │       ├── frontend-production.yaml   
-│       └── monitoring-stack.yaml      
+│       ├── monitoring.yaml            
+│       ├── fluentbit.yaml             
+│       └── opensearch.yaml            
 │
 ├── apps/                             
 │   ├── backend/                       
@@ -30,11 +32,17 @@ k8s-manifest/
 │
 └── monitoring/                       
     ├── fluentbit/
+    │   ├── Chart.lock                 
     │   ├── Chart.yaml                 
-    │   └── values.yaml                
-    ├── grafana/
+    │   ├── charts/
     │   └── values.yaml                
     ├── opensearch/
+    │   ├── Chart.lock
+    │   ├── Chart.yaml
+    │   ├── charts/
     │   └── values.yaml
     └── prometheus/
+        ├── Chart.lock
+        ├── Chart.yaml
+        ├── charts/
         └── values.yaml                
