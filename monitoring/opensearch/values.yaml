@@ -24,3 +24,26 @@ opensearch:
 
   service:
     type: ClusterIP
+
+opensearch-dashboards:
+  opensearchHosts: "https://opensearch-cluster-master:9200"
+
+  opensearchAccount:
+    secret: opensearch-dashboards-auth
+
+  config:
+    opensearch_dashboards.yml: |
+      server.host: "0.0.0.0"
+      opensearch.hosts: ["https://opensearch-cluster-master:9200"]
+      opensearch.ssl.verificationMode: none
+
+  service:
+    type: ClusterIP
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
