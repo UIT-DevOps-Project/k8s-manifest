@@ -10,7 +10,7 @@ spec:
 
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: test/argocd-opensearch
+    targetRevision: main
     path: ingress/controller
 
   destination:
