@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UIT-DevOps-Project/k8s-manifest
-    targetRevision: test/argocd-opensearch
+    targetRevision: main
     path: monitoring/prometheus
   destination:
     server: https://kubernetes.default.svc
