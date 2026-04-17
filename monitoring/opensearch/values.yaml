@@ -14,6 +14,9 @@ opensearch:
   persistence:
     enabled: false
 
+  nodeSelector:
+    node-group: monitor-node
+
   resources:
     requests:
       cpu: "200m"
@@ -39,6 +42,9 @@ opensearch-dashboards:
 
   service:
     type: ClusterIP
+
+  nodeSelector:
+    node-group: monitor-node
 
   resources:
     requests:
