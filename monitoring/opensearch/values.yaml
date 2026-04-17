@@ -1,0 +1,55 @@
+opensearch:
+  singleNode: true
+  replicas: 1
+
+  opensearchJavaOpts: "-Xms512M -Xmx512M"
+
+  extraEnvs:
+    - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: opensearch-admin-secret
+          key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+
+  persistence:
+    enabled: false
+
+  nodeSelector:
+    node-group: monitor-node
+
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+  service:
+    type: ClusterIP
+
+opensearch-dashboards:
+  opensearchHosts: "https://opensearch-cluster-master:9200"
+
+  opensearchAccount:
+    secret: opensearch-dashboards-auth
+
+  config:
+    opensearch_dashboards.yml: |
+      server.host: "0.0.0.0"
+      opensearch.hosts: ["https://opensearch-cluster-master:9200"]
+      opensearch.ssl.verificationMode: none
+
+  service:
+    type: ClusterIP
+
+  nodeSelector:
+    node-group: monitor-node
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"

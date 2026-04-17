@@ -4,6 +4,10 @@ fluent-bit:
   
   daemonSet:
     enabled: true
+
+  envFrom:
+    - secretRef:
+        name: opensearch-admin-secret
     
   config:
     service: |
@@ -22,6 +26,7 @@ fluent-bit:
       [INPUT]
           Name tail
           Path /var/log/containers/*.log
+          Exclude_Path /var/log/containers/fluentbit-fluent-bit-*.log
           multiline.parser docker, cri
           Tag kube.*
           Mem_Buf_Limit 5MB
@@ -38,5 +43,15 @@ fluent-bit:
 
     outputs: |
       [OUTPUT]
-          Name stdout
-          Match *
+          Name opensearch
+          Match kube.*
+          Host opensearch-cluster-master
+          Port 9200
+          HTTP_User admin
+          HTTP_Passwd ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+          Logstash_Format On
+          Logstash_Prefix k8s
+          Suppress_Type_Name On
+          Retry_Limit False
+          TLS On
+          TLS.Verify Off

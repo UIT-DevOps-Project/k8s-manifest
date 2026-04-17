@@ -2,3 +2,5 @@
 postgres-secret.yaml
 ghcr-secret.yaml
 private-key.yaml
+
+.secrets/
