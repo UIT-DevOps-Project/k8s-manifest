@@ -22,22 +22,14 @@ spec:
               OSD_URL="http://opensearch-opensearch-dashboards:5601"
 
               echo "Waiting for OpenSearch Dashboards..."
-              until curl -sf -o /dev/null "$OSD_URL/api/status"; do
+              until curl -sf -u "${OPENSEARCH_USER}:${OPENSEARCH_PASSWORD}" -o /dev/null "$OSD_URL/api/status"; do
                 echo "Not ready, retrying in 5s..."
                 sleep 5
               done
               echo "Dashboards is up"
 
-              echo "Logging in..."
-              curl -s -c /tmp/cookies.txt \
-                -X POST "$OSD_URL/auth/login" \
-                -H "Content-Type: application/json" \
-                -H "osd-xsrf: true" \
-                -d "{\"username\":\"${OPENSEARCH_USER}\",\"password\":\"${OPENSEARCH_PASSWORD}\"}"
-              echo ""
-
               echo "Importing dashboard..."
-              RESULT=$(curl -s -b /tmp/cookies.txt \
+              RESULT=$(curl -s -u "${OPENSEARCH_USER}:${OPENSEARCH_PASSWORD}" \
                 -X POST "$OSD_URL/api/saved_objects/_import?overwrite=true" \
                 -H "osd-xsrf: true" \
                 -F "file=@/dashboard/k8s-dashboard.ndjson")

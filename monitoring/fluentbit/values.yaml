@@ -57,6 +57,41 @@ fluent-bit:
           K8S-Logging.Parser On
           K8S-Logging.Exclude On
 
+      [FILTER]
+          Name    lua
+          Match   kube.*
+          script  /fluent-bit/scripts/extract_level.lua
+          call    extract_level
+
+    luaScripts:
+      extract_level.lua: |
+        function extract_level(tag, timestamp, record)
+          local log = record["log"] or ""
+          local level = "unknown"
+          -- JSON structured: {"level":"error",...} or {"level":"ERROR",...}
+          local json_level = string.match(log, '"level"%s*:%s*"(%a+)"')
+          if json_level then
+            level = string.lower(json_level)
+          -- NestJS: [Nest] ... ERROR [context]
+          elseif string.match(log, "%[Nest%].*ERROR") or string.match(log, " ERROR ") then
+            level = "error"
+          elseif string.match(log, "%[Nest%].*WARN") or string.match(log, " WARN ") or string.match(log, " WARNING ") then
+            level = "warn"
+          elseif string.match(log, "%[Nest%].*DEBUG") or string.match(log, " DEBUG ") then
+            level = "debug"
+          elseif string.match(log, "%[Nest%].*LOG") or string.match(log, " INFO ") then
+            level = "info"
+          -- stderr = error signal
+          elseif record["stream"] == "stderr" then
+            level = "error"
+          -- stdout default
+          elseif record["stream"] == "stdout" then
+            level = "info"
+          end
+          record["level"] = level
+          return 1, timestamp, record
+        end
+
     outputs: |
       [OUTPUT]
           Name opensearch
