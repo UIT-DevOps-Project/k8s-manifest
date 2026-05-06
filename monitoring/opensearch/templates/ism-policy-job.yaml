@@ -1,0 +1,85 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: opensearch-ism-policy
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 5
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: ism-policy
+          image: curlimages/curl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              OS_URL="https://opensearch-cluster-master:9200"
+
+              echo "Waiting for OpenSearch..."
+              until curl -sf -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" -k \
+                -o /dev/null "$OS_URL/_cluster/health"; do
+                echo "Not ready, retrying in 5s..."
+                sleep 5
+              done
+              echo "OpenSearch is up"
+
+              echo "Checking existing ISM policy..."
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" -k \
+                -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
+                "$OS_URL/_plugins/_ism/policies/k8s-logs-policy")
+
+              if [ "$STATUS" = "200" ]; then
+                echo "ISM policy already exists, skipping"
+                exit 0
+              fi
+
+              echo "Applying ISM policy..."
+              RESULT=$(curl -s -k -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
+                -X PUT "$OS_URL/_plugins/_ism/policies/k8s-logs-policy" \
+                -H "Content-Type: application/json" \
+                -d '{
+                  "policy": {
+                    "description": "Delete k8s log indices after 7 days",
+                    "default_state": "hot",
+                    "states": [
+                      {
+                        "name": "hot",
+                        "actions": [],
+                        "transitions": [
+                          {
+                            "state_name": "delete",
+                            "conditions": { "min_index_age": "7d" }
+                          }
+                        ]
+                      },
+                      {
+                        "name": "delete",
+                        "actions": [{ "delete": {} }],
+                        "transitions": []
+                      }
+                    ],
+                    "ism_template": [
+                      {
+                        "index_patterns": ["k8s-*"],
+                        "priority": 100
+                      }
+                    ]
+                  }
+                }')
+              echo "Result: $RESULT"
+
+              echo "$RESULT" | grep -qE '"_id":"k8s-logs-policy"|"policy_id":"k8s-logs-policy"' \
+                && echo "ISM policy OK" && exit 0
+              echo "ISM policy failed" && exit 1
+          env:
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: opensearch-admin-secret
+                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD

@@ -7,7 +7,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 ## Grafana
 ```bash
-kubectl port-forward -n monitoring svc/monitoring-stack-grafana 3000:80
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
 ```
 
 ## OpenSearch API
@@ -17,7 +17,7 @@ kubectl port-forward -n monitoring svc/opensearch-cluster-master 9200:9200
 
 ## OpenSearch Dashboards
 ```bash
-kubectl port-forward -n monitoring svc/opensearch-dashboards 5601:5601
+kubectl port-forward -n monitoring svc/opensearch-opensearch-dashboards 5601:5601
 username: admin
 pass : contact me :)))
 ```
