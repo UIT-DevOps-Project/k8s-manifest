@@ -12,7 +12,9 @@ opensearch:
           key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
 
   persistence:
-    enabled: false
+    enabled: true
+    storageClass: gp2
+    size: 10Gi
 
   nodeSelector:
     node-group: monitor-node
