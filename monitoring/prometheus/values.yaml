@@ -1,23 +1,63 @@
 kube-prometheus-stack:
   prometheusOperator:
     admissionWebhooks:
-      enabled: false # Disable admission webhooks to avoid TLS issues in local environments 
+      enabled: false
     tls:
-      enabled: false # Disable TLS for Prometheus Operator to avoid certificate issues in local environments
-    nodeSelector:
-      node-group: monitor-node
+      enabled: false
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
 
   prometheus:
     prometheusSpec:
       nodeSelector:
         node-group: monitor-node
-    
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+
   grafana:
     adminPassword: "admin"
-    nodeSelector:
-      node-group: monitor-node
-      
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+
   alertmanager:
     alertmanagerSpec:
-      nodeSelector:
-        node-group: monitor-node
+      resources:
+        requests:
+          cpu: "20m"
+          memory: "32Mi"
+        limits:
+          cpu: "100m"
+          memory: "64Mi"
+
+  kube-state-metrics:
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "32Mi"
+      limits:
+        cpu: "100m"
+        memory: "64Mi"
+
+  prometheus-node-exporter:
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "16Mi"
+      limits:
+        cpu: "100m"
+        memory: "32Mi"
