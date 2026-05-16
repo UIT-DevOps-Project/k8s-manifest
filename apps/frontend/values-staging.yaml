@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/uit-devops-project/frontend-app
-  tag: v2.0.1
+  tag: v2.0.5
 
 imagePullSecret: ghcr-secret
 
