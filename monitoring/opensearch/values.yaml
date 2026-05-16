@@ -49,6 +49,8 @@ opensearch-dashboards:
       server.host: "0.0.0.0"
       opensearch.hosts: ["https://opensearch-cluster-master:9200"]
       opensearch.ssl.verificationMode: none
+      opensearch_security.multitenancy.enabled: false
+      opensearch_security.readonly_mode.roles: ["kibana_read_only"]
 
   service:
     type: ClusterIP
