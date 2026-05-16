@@ -12,6 +12,8 @@ spec:
     helm:
       values: |
         clusterName: uit-devops-nt548-cluster
+        vpcId: vpc-0b4aa94afb63bf974
+        region: us-east-1
         serviceAccount:
           create: true
           annotations:
