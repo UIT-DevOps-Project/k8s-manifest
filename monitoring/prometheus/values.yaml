@@ -32,7 +32,11 @@ kube-prometheus-stack:
           memory: "512Mi"
 
   grafana:
-    adminPassword: "admin"
+    adminPassword: "Nt548@DevOps2026!AWS"
+    defaultDashboardsEnabled: false
+    sidecar:
+      dashboards:
+        enabled: true
     resources:
       requests:
         cpu: "50m"
