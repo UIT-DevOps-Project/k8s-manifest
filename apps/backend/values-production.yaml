@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/uit-devops-project/backend-app
-  tag: latest
+  tag: v2.0.6
 
 imagePullSecret: ghcr-secret
 
