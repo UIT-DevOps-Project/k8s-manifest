@@ -56,7 +56,7 @@ opensearch-dashboards:
     type: ClusterIP
 
   nodeSelector:
-    node-group: monitor-node
+    node-group: app-nodes
 
   resources:
     requests:
