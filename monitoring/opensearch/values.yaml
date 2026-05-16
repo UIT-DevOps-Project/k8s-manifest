@@ -2,7 +2,7 @@ opensearch:
   singleNode: true
   replicas: 1
 
-  opensearchJavaOpts: "-Xms512M -Xmx512M"
+  opensearchJavaOpts: "-Xms256M -Xmx256M"
 
   extraEnvs:
     - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
@@ -22,10 +22,10 @@ opensearch:
   resources:
     requests:
       cpu: "200m"
-      memory: "1Gi"
+      memory: "512Mi"
     limits:
       cpu: "1000m"
-      memory: "2Gi"
+      memory: "1Gi"
 
   service:
     type: ClusterIP
