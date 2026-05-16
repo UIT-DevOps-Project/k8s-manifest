@@ -22,7 +22,7 @@ spec:
               OS_URL="https://opensearch-cluster-master:9200"
 
               echo "Waiting for OpenSearch..."
-              until curl -sf -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" -k \
+              until curl -sf --max-time 10 -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" -k \
                 -o /dev/null "$OS_URL/_cluster/health"; do
                 echo "Not ready, retrying in 5s..."
                 sleep 5
@@ -30,7 +30,7 @@ spec:
               echo "OpenSearch is up"
 
               echo "Checking existing ISM policy..."
-              STATUS=$(curl -s -o /dev/null -w "%{http_code}" -k \
+              STATUS=$(curl -s --max-time 15 -o /dev/null -w "%{http_code}" -k \
                 -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
                 "$OS_URL/_plugins/_ism/policies/k8s-logs-policy")
 
@@ -40,7 +40,7 @@ spec:
               fi
 
               echo "Applying ISM policy..."
-              RESULT=$(curl -s -k -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
+              RESULT=$(curl -s --max-time 30 -k -u "admin:${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
                 -X PUT "$OS_URL/_plugins/_ism/policies/k8s-logs-policy" \
                 -H "Content-Type: application/json" \
                 -d '{
