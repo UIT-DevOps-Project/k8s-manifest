@@ -58,9 +58,18 @@ fluent-bit:
           K8S-Logging.Exclude On
 
       [FILTER]
-          Name    record_modifier
-          Match   kube.*
-          Record  level unknown
+          Name parser
+          Match kube.*
+          Key_Name log
+          Parser nginx_access
+          Reserve_Data On
+          Preserve_Key On
+
+      [FILTER]
+          Name lua
+          Match kube.*
+          Script /fluent-bit/scripts/set_log_level.lua
+          call set_log_level
 
     outputs: |
       [OUTPUT]
@@ -81,3 +90,40 @@ fluent-bit:
           net.keepalive on
           net.keepalive_idle_timeout 30
           Trace_Error On
+
+    customParsers: |
+      [PARSER]
+          Name docker_no_time
+          Format json
+          Time_Keep Off
+          Time_Key time
+          Time_Format %Y-%m-%dT%H:%M:%S.%L
+
+      [PARSER]
+          Name nginx_access
+          Format regex
+          Regex ^(?<remote_addr>[^ ]+) - (?<remote_user>[^ ]+) \[(?<time_local>[^\]]+)\] "(?<http_method>\S+) (?<http_path>[^"]+) HTTP/[0-9.]+" (?<http_status>[0-9]+) (?<bytes_sent>[0-9]+) "(?<http_referer>[^"]*)" "(?<http_user_agent>[^"]*)"
+
+  # Lua script for log level normalization
+  luaScripts:
+    set_log_level.lua: |
+      function set_log_level(tag, timestamp, record)
+          if record["http_status"] ~= nil then
+              local status = tonumber(record["http_status"])
+              if status >= 500 then
+                  record["level"] = "error"
+              elseif status >= 400 then
+                  record["level"] = "warning"
+              else
+                  record["level"] = "info"
+              end
+          elseif record["level"] == nil or record["level"] == "" or record["level"] == "unknown" then
+              local stream = record["stream"]
+              if stream == "stderr" then
+                  record["level"] = "error"
+              else
+                  record["level"] = "unknown"
+              end
+          end
+          return 1, timestamp, record
+      end
