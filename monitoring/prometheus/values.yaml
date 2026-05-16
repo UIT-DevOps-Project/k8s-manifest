@@ -16,6 +16,13 @@ kube-prometheus-stack:
     prometheusSpec:
       nodeSelector:
         node-group: monitor-node
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: opensearch
+              topologyKey: kubernetes.io/hostname
       resources:
         requests:
           cpu: "100m"

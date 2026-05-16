@@ -19,6 +19,14 @@ opensearch:
   nodeSelector:
     node-group: monitor-node
 
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+          topologyKey: kubernetes.io/hostname
+
   resources:
     requests:
       cpu: "200m"
